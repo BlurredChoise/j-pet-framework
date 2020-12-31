@@ -112,7 +112,8 @@ OptsStrAny setOutputOptions(const JPetParams& oldParams, bool resetOutputPath, c
 {
   OptsStrAny new_opts = oldParams.getOptions();
   if (FileTypeChecker::getInputFileType(oldParams.getOptions()) == FileTypeChecker::kHldRoot ||
-      FileTypeChecker::getInputFileType(oldParams.getOptions()) == FileTypeChecker::kMCGeant)
+      FileTypeChecker::getInputFileType(oldParams.getOptions()) == FileTypeChecker::kMCGeant ||
+      FileTypeChecker::getInputFileType(oldParams.getOptions()) == FileTypeChecker::kMCGate)
   {
     jpet_options_generator_tools::setOutputFileType(new_opts, "root");
   }

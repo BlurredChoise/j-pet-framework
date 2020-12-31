@@ -75,7 +75,8 @@ public:
     kHldRoot,
     kZip,
     kMCGeant,
-    kUndefinedFileType
+    kUndefinedFileType,
+    kMCGate
   };
   static FileType getInputFileType(const OptsStrAny& opts);
   static FileType getOutputFileType(const OptsStrAny& opts);

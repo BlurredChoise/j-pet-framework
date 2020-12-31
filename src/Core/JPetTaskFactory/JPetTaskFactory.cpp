@@ -105,6 +105,11 @@ void addDefaultTasksFromOptions(
       addTaskToChain(generatorsMap, mcInfo, outChain);
     }
 
+    if (fileType == FileTypeChecker::kMCGate) {
+      auto mcInfo = TaskInfo("JPetGateParser", "mcGate", "hits", 1);
+      addTaskToChain(generatorsMap, mcInfo, outChain);
+    }
+
     // Create task to unzip file if indicated by the filetype
     if (fileType == FileTypeChecker::kZip) {
       auto unzip = []() {

@@ -29,7 +29,7 @@ namespace jpet_options_tools
 {
 
 std::map<std::string, FileTypeChecker::FileType> FileTypeChecker::fStringToFileType = {
-    {"", kNoType}, {"root", kRoot}, {"mcGeant", kMCGeant}, {"scope", kScope}, {"hld", kHld}, {"hldRoot", kHldRoot}, {"zip", kZip}};
+    {"", kNoType}, {"root", kRoot}, {"mcGeant", kMCGeant}, {"scope", kScope}, {"hld", kHld}, {"hldRoot", kHldRoot}, {"zip", kZip}, {"mcGate",kMCGate}};
 
 bool isOptionSet(const OptsStrAny& opts, const std::string& optionName) { return static_cast<bool>(opts.count(optionName)); }
 
