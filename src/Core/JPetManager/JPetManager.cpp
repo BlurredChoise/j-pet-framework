@@ -17,6 +17,7 @@
 #include "JPetCmdParser/JPetCmdParser.h"
 #include "JPetCommonTools/JPetCommonTools.h"
 #include "JPetGeantParser/JPetGeantParser.h"
+#include "JPetGateParser/JPetGateParser.h"
 #include "JPetLoggerInclude.h"
 #include "JPetOptionsGenerator/JPetOptionsGenerator.h"
 #include "JPetTaskChainExecutor/JPetTaskChainExecutor.h"
@@ -136,7 +137,11 @@ void JPetManager::setThreadsEnabled(bool enable)
   ENABLE_THREADS_INFO(enable);
 }
 
-void JPetManager::registerDefaultTasks() { JPetManager::getManager().registerTask<JPetGeantParser>("JPetGeantParser"); }
+void JPetManager::registerDefaultTasks()
+{
+ JPetManager::getManager().registerTask<JPetGeantParser>("JPetGeantParser");
+ JPetManager::getManager().registerTask<JPetGateParser>("JPetGateParser");
+}
 
 void JPetManager::useTasksFromUserParams(const std::map<std::string, boost::any>& opts)
 {

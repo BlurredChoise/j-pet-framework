@@ -17,6 +17,7 @@
 #include "JPetTaskFactory/JPetTaskFactory.h"
 #include "JPetScopeLoader/JPetScopeLoader.h"
 #include "JPetGeantParser/JPetGeantParser.h"
+#include "JPetGateParser/JPetGateParser.h"
 #include "JPetTaskLooper/JPetTaskLooper.h"
 #include "JPetUnpackTask/JPetUnpackTask.h"
 #include "JPetUnzipTask/JPetUnzipTask.h"

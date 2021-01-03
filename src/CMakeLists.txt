@@ -14,7 +14,7 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR}/lib)
 ## Find Threads package
 #
 find_package(Threads REQUIRED)
-
+ 
 ################################################################################
 ## Find CERN ROOT
 # first try to find ROOT 6 compiled with CMake
@@ -146,6 +146,7 @@ set(FOLDERS_WITH_SOURCE
   ParametersTools
   MC
   GeantParser
+  GateParser
   )
 
 ## Point sources
@@ -238,6 +239,7 @@ set(SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/Core/JPetAnalysisTools/JPetAnalysisTools
             ${CMAKE_CURRENT_SOURCE_DIR}/Tasks/JPetSimplePhysSignalReco/JPetSimplePhysSignalReco.cpp
             ${CMAKE_CURRENT_SOURCE_DIR}/Tasks/JPetUnpackTask/JPetUnpackTask.cpp
             ${CMAKE_CURRENT_SOURCE_DIR}/Tasks/JPetUnzipTask/JPetUnzipTask.cpp
+            ${CMAKE_CURRENT_SOURCE_DIR}/GateParser/JPetGateParser/JPetGateParser.cpp
 )
 
 
@@ -280,6 +282,7 @@ set(HEADERS_WITH_DICTIONARY_REQUIRED
   JPetGeantDecayTree/JPetGeantDecayTree.h
   JPetGeantEventPack/JPetGeantEventPack.h
   JPetGeantEventInformation/JPetGeantEventInformation.h
+  GateHit/GateHit.h
   )
 
 set(LINKDEF_NAME JPetFramework_LinkDef.h)
