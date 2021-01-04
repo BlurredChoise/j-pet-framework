@@ -54,19 +54,51 @@ public:
   void saveReconstructedHit(JPetHit recHit);
   void processGateHit(GateHit* gate_hit);
   unsigned int getScintilatorID( const JPetParamBank& paramBank, const TVector3& scintilator_position );
+  void loadSmearingOptionsAndSetupExperimentalParametrizer();
+  unsigned long getOriginalSeed() const;
 
 protected:
  JPetGeomMapping* fDetectorMap = nullptr;
  double fMaxTime = 0.;
  double fMinTime = -50.e6; // electronic time window 50 micro seconds - true for run 3
  double fSimulatedActivity = 4.7;//4.7; //< in MBq; value for run3
- long fActivityIndex = 0;
+ double fExperimentalThreshold = 10; //< in keV
  JPetHitExperimentalParametrizer fExperimentalParametrizer;
+ double fTimeShift = fMinTime;
+ unsigned long fSeed = 0.;
 
-protected:
+ //Cmds
+ const std::string kMaxTimeWindowParamKey = "GateParser_MaxTimeWindow_double";
+ const std::string kMinTimeWindowParamKey = "GateParser_MinTimeWindow_double";
+ const std::string kSourceActivityParamKey = "GateParser_SourceActivity_double";
+ const std::string kEnergyThresholdParamKey = "GateParser_EnergyThreshold_double";
 
-  std::vector<JPetMCHit> fStoredMCHits; ///< save MC hits into single time window when it contains enough hits
-  std::vector<JPetHit> fStoredHits;     ///< save RECONSTRUCTED MC hits into single time window when it contains enough hits
+ const std::string kTimeSmearingParametersParamKey = "GateParser_TimeSmearingParameters_std::vector<double>";
+ const std::string kTimeSmearingFunctionParamKey = "GateParser_TimeSmearingFunction_std::string";
+ const std::string kTimeSmearingFunctionLimitsParamKey = "GateParser_TimeSmearingFunctionLimits_std::vector<double>";
+
+ const std::string kEnergySmearingParametersParamKey = "GateParser_EnergySmearingParameters_std::vector<double>";
+ const std::string kEnergySmearingFunctionParamKey = "GateParser_EnergySmearingFunction_std::string";
+ const std::string kEnergySmearingFunctionLimitsParamKey = "GateParser_EnergySmearingFunctionLimits_std::vector<double>";
+
+ const std::string kZPositionSmearingParametersParamKey = "GateParser_ZPositionSmearingParameters_std::vector<double>";
+ const std::string kZPositionSmearingFunctionParamKey = "GateParser_ZPositionSmearingFunction_std::string";
+ const std::string kZPositionSmearingFunctionLimitsParamKey = "GateParser_ZPositionSmearingFunctionLimits_std::vector<double>";
+
+ const std::string kSeedParamKey = "GateParser_Seed_int";
+
+ std::vector<JPetHit> fStoredHits;     ///< save RECONSTRUCTED MC hits into single time window when it contains enough hits
+
+ int fLastEventID = -1;
+
+ std::vector<float> fTimeDistroOfDecays = {};
+ std::vector<float> fTimeDiffDistro = {};
+ unsigned int fCurrentIndexTimeShift = 0;
+
+ unsigned int getNumberOfDecaysInWindow() const;
+ float getNextTimeShift();
+ void clearTimeDistoOfDecays();
+ bool isTimeWindowFull() const;
 
 };
 
