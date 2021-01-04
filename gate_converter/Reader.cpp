@@ -4,7 +4,7 @@
 void Reader::init()
 {
  p_file = new TFile("output.mcGate.root","READ");
- p_tree = dynamic_cast<TTree*>(p_file->Get("tree"));
+ p_tree = dynamic_cast<TTree*>(p_file->Get("Hits"));
  entries = p_tree->GetEntries();
 
  p_tree->SetBranchAddress("PDGEncoding", &pdg, &b_pdg);
@@ -20,7 +20,7 @@ void Reader::init()
  p_tree->SetBranchAddress("sourcePosX",&sourcex,&b_sourcex);
  p_tree->SetBranchAddress("sourcePosY",&sourcey,&b_sourcey);
  p_tree->SetBranchAddress("sourcePosZ",&sourcez,&b_sourcez);
- p_tree->SetBranchAddress("volumeID_1",&volID,&b_volID);
+ p_tree->SetBranchAddress("volumeID",&volID,&b_volID);
 }
 
 bool Reader::read()
@@ -51,7 +51,7 @@ GateHit* Reader::get()
  gate_hit.sourcex = sourcex;
  gate_hit.sourcey = sourcey;
  gate_hit.sourcez = sourcez;
- gate_hit.sci_id = volID + 1;
+ gate_hit.sci_id = volID[1] + 1;
  return &gate_hit;
 }
 

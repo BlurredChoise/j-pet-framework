@@ -28,7 +28,7 @@ class Reader
   int track_id = -1;
   int parent_id = -1;
   int pdg = 0;
-  int volID = 0;
+  int volID[10];
 
   float edep = 0.0;
   double time = 0.0;

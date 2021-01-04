@@ -165,6 +165,8 @@ void JPetGateParser::loadSmearingOptionsAndSetupExperimentalParametrizer()
   }
 
   fExperimentalParametrizer.setSmearingFunctionLimits(limits);
+
+  fExperimentalParametrizer.printAllParameters();
 }
 
 
