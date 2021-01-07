@@ -10,16 +10,30 @@
 class Reader
 {
  public:
+ 
+  enum class DetectorGeometry
+  {
+   Unknown = 0,
+   ThreeLayers = 1,
+   TwentyFourModules = 2
+  };
+ 
   Reader() {}
   void init();
   bool read();
   GateHit* get();
   void close();
+  
+  void set_geometry( DetectorGeometry dg );
+  int get_scintillator_id(int volID ) const;
+  void set_input_file_path(std::string path);
 
+  std::string input_file_path = "";
   TFile* p_file = nullptr;
   TTree* p_tree = nullptr;
   int entries = 0;
   int entry_index = 0;
+  DetectorGeometry detector_geometry = DetectorGeometry::Unknown;
 
   GateHit gate_hit;
 

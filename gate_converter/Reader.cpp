@@ -3,7 +3,7 @@
 
 void Reader::init()
 {
- p_file = new TFile("output.mcGate.root","READ");
+ p_file = new TFile(input_file_path.c_str(),"READ");
  p_tree = dynamic_cast<TTree*>(p_file->Get("Hits"));
  entries = p_tree->GetEntries();
 
@@ -51,7 +51,7 @@ GateHit* Reader::get()
  gate_hit.sourcex = sourcex;
  gate_hit.sourcey = sourcey;
  gate_hit.sourcez = sourcez;
- gate_hit.sci_id = volID[1] + 1;
+ gate_hit.sci_id = get_scintillator_id(volID[1]);
  return &gate_hit;
 }
 
@@ -60,5 +60,21 @@ void Reader::close()
  p_file->Close();
  delete p_file;
  std::cout << counter << std::endl;
- //delete p_tree;
 }
+
+void Reader::set_geometry( DetectorGeometry dg ) { detector_geometry = dg; }
+
+int Reader::get_scintillator_id(int volID ) const
+{
+ switch(detector_geometry)
+ {
+  case DetectorGeometry::ThreeLayers:
+   return volID + 1;
+  case DetectorGeometry::TwentyFourModules:
+   return volID + 201;
+  default:
+   return 0;
+ };
+}
+
+void Reader::set_input_file_path(std::string path) { input_file_path = path; }

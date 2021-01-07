@@ -2,7 +2,7 @@
 
 void Writer::init()
 {
- p_file = new TFile("data.mcGate.root","RECREATE");
+ p_file = new TFile( output_file_path.c_str()/*"data.mcGate.root"*/,"RECREATE");
  p_tree = new TTree("T","T");
  p_gate_hit = new GateHit();
  p_tree->Branch("GHit",&p_gate_hit);
@@ -31,3 +31,5 @@ void Writer::test()
  }
  close();
 }
+
+void Writer::set_output_file_path(std::string path) { output_file_path = path; }
