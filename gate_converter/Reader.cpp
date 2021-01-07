@@ -1,8 +1,14 @@
 #include "Reader.h"
 #include <iostream>
+#include "TCanvas.h"
 
 void Reader::init()
 {
+ h_volID_1 = new TH1D("h_vol_id1","",601,-0.5,600.5);
+ h_volID_2 = new TH1D("h_vol_id2","",601,-0.5,600.5);
+ h_sci_id = new TH1D("h_sci_id","",601,-0.5,600.5);
+ h_x_y = new TH2D("h_x_y","",1000,-50,50,1000,-50,50);
+
  p_file = new TFile(input_file_path.c_str(),"READ");
  p_tree = dynamic_cast<TTree*>(p_file->Get("Hits"));
  entries = p_tree->GetEntries();
@@ -21,6 +27,7 @@ void Reader::init()
  p_tree->SetBranchAddress("sourcePosY",&sourcey,&b_sourcey);
  p_tree->SetBranchAddress("sourcePosZ",&sourcez,&b_sourcez);
  p_tree->SetBranchAddress("volumeID",&volID,&b_volID);
+
 }
 
 bool Reader::read()
@@ -51,7 +58,11 @@ GateHit* Reader::get()
  gate_hit.sourcex = sourcex;
  gate_hit.sourcey = sourcey;
  gate_hit.sourcez = sourcez;
- gate_hit.sci_id = get_scintillator_id(volID[1]);
+ h_volID_1->Fill(volID[1]);
+ h_volID_2->Fill(volID[2]);
+ gate_hit.sci_id = get_scintillator_id();
+ h_sci_id->Fill(gate_hit.sci_id);
+ h_x_y->Fill(posx/10.0,posy/10.0);
  return &gate_hit;
 }
 
@@ -60,18 +71,32 @@ void Reader::close()
  p_file->Close();
  delete p_file;
  std::cout << counter << std::endl;
+ TCanvas c("c");
+ h_volID_1->Draw("hist");
+ c.Print("h_volID_1.png");
+ h_volID_2->Draw("hist");
+ c.Print("h_volID_2.png");
+ h_sci_id->Draw("hist");
+ c.Print("h_sci_id.png");
+ h_x_y->Draw("colz");
+ c.Print("h_x_y.png");
+ 
+ delete h_volID_1;
+ delete h_volID_2;
+ delete h_sci_id;
+ delete h_x_y;
 }
 
 void Reader::set_geometry( DetectorGeometry dg ) { detector_geometry = dg; }
 
-int Reader::get_scintillator_id(int volID ) const
+int Reader::get_scintillator_id()
 {
  switch(detector_geometry)
  {
   case DetectorGeometry::ThreeLayers:
-   return volID + 1;
+   return 1 + volID[1];
   case DetectorGeometry::TwentyFourModules:
-   return volID + 201;
+   return 201 + volID[1]*13 + volID[2];
   default:
    return 0;
  };

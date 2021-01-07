@@ -39,8 +39,8 @@ int main( int argc, char* argv[] )
  }
 
  Writer w;
- w.init();
  w.set_output_file_path(g_output_file_name);
+ w.init();
  Reader r;
  r.set_geometry(g_detector_geometry);
  r.set_input_file_path(g_input_file_name);
@@ -49,7 +49,7 @@ int main( int argc, char* argv[] )
  {
   GateHit* p_gh = r.get();
   if (p_gh != nullptr )
-   w.write(*p_gh);
+  w.write(*p_gh);
  }
  r.close();
  w.close();

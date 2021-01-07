@@ -6,6 +6,8 @@
 #include "TBranch.h"
 #include <string>
 #include "GateHit.h"
+#include "TH1D.h"
+#include "TH2D.h"
 
 class Reader
 {
@@ -25,7 +27,7 @@ class Reader
   void close();
   
   void set_geometry( DetectorGeometry dg );
-  int get_scintillator_id(int volID ) const;
+  int get_scintillator_id();
   void set_input_file_path(std::string path);
 
   std::string input_file_path = "";
@@ -36,6 +38,10 @@ class Reader
   DetectorGeometry detector_geometry = DetectorGeometry::Unknown;
 
   GateHit gate_hit;
+  TH1D* h_volID_1 = nullptr;
+  TH1D* h_volID_2 = nullptr;
+  TH1D* h_sci_id = nullptr;
+  TH2D* h_x_y = nullptr;
 
   //Zmienne branchów
   int event_id = -1;
@@ -54,6 +60,9 @@ class Reader
   float sourcez = 0.0;
 
   Char_t process_name[20];
+  
+  int level1ID = 0;
+  int baseID = 0;
 
   unsigned int counter = 0;
 
@@ -73,7 +82,6 @@ class Reader
   TBranch* b_sourcez = nullptr;
   TBranch* b_process_name = nullptr;
   TBranch* b_volID = nullptr;
-
 
 };
 
