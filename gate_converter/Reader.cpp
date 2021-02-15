@@ -52,9 +52,9 @@ GateHit* Reader::get()
  gate_hit.event_id = event_id;
  gate_hit.edep = edep;
  gate_hit.time = time;
- gate_hit.posx = posx;
- gate_hit.posy = posy;
- gate_hit.posz = posz;
+ gate_hit.posx = posx/10.0; //mm --> cm
+ gate_hit.posy = posy/10.0;
+ gate_hit.posz = posz/10.0;
  gate_hit.sourcex = sourcex;
  gate_hit.sourcey = sourcey;
  gate_hit.sourcez = sourcez;
@@ -62,7 +62,7 @@ GateHit* Reader::get()
  h_volID_2->Fill(volID[2]);
  gate_hit.sci_id = get_scintillator_id();
  h_sci_id->Fill(gate_hit.sci_id);
- h_x_y->Fill(posx/10.0,posy/10.0);
+ h_x_y->Fill(posx,posy);
  return &gate_hit;
 }
 
